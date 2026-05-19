@@ -1,0 +1,347 @@
+.permission-page {
+  background-color: #f8fafc;
+  min-height: calc(100vh - 80px);
+  font-family: 'Inter', sans-serif;
+}
+
+.permission-content {
+  padding: 24px 40px 40px;
+}
+
+.permission-header {
+  display: none;
+}
+
+.breadcrumbs {
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  letter-spacing: 0.5px;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.page-title h1 {
+  font-size: 28px;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0;
+}
+
+.role-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.role-selector-container label {
+  font-size: 11px;
+  font-weight: 700;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+.role-select {
+  padding: 10px 16px;
+  padding-right: 40px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background-color: white;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e293b;
+  min-width: 250px;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2cbd5569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+  transition: all 0.2s;
+}
+
+.role-select:focus {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.role-select:disabled {
+  background-color: #f1f5f9;
+  cursor: not-allowed;
+}
+
+/* Card */
+.permission-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  padding: 32px;
+  margin-bottom: 24px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.indicator-bar {
+  width: 6px;
+  height: 24px;
+  background: #f59e0b;
+  border-radius: 4px;
+}
+
+.card-title h2 {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.legend {
+  display: flex;
+  gap: 24px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.checkbox-mock {
+  width: 18px;
+  height: 18px;
+  border-radius: 6px;
+  border: 1.5px solid #cbd5e1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkbox-mock.checked {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+  color: white;
+}
+
+/* Matrix Table */
+.matrix-container {
+  overflow-x: auto;
+}
+
+.matrix-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.matrix-table th {
+  padding: 16px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+  border-bottom: 1px solid #f1f5f9;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.matrix-table th.th-module {
+  text-align: left;
+  width: 30%;
+}
+
+.matrix-table td {
+  padding: 20px 16px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.matrix-table tr:last-child td {
+  border-bottom: none;
+}
+
+.td-module {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.module-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.module-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+.td-checkbox {
+  text-align: center;
+}
+
+/* Custom Checkbox */
+.custom-checkbox {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  width: 22px;
+  height: 22px;
+  background-color: white;
+  border: 2px solid #cbd5e1;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.custom-checkbox:hover input ~ .checkmark {
+  border-color: #94a3b8;
+}
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.custom-checkbox input:disabled ~ .checkmark {
+  background-color: #f1f5f9;
+  border-color: #e2e8f0;
+  cursor: not-allowed;
+}
+
+/* Footer */
+.permission-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 24px 32px;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+}
+
+.footer-info {
+  font-size: 13px;
+  color: #64748b;
+  font-style: italic;
+}
+
+.footer-info strong {
+  color: #1e293b;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.footer-actions {
+  display: flex;
+  gap: 16px;
+}
+
+.btn-cancel {
+  padding: 12px 24px;
+  background: white;
+  border: none;
+  color: #475569;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background 0.2s;
+}
+
+.btn-cancel:hover {
+  background: #f1f5f9;
+}
+
+.btn-save {
+  padding: 12px 32px;
+  background: #f59e0b;
+  border: none;
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+
+.btn-save:hover:not(:disabled) {
+  background: #d97706;
+  box-shadow: 0 6px 16px rgba(245, 158, 11, 0.3);
+  transform: translateY(-1px);
+}
+
+.btn-save:disabled {
+  background: #cbd5e1;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .permission-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  
+  .role-selector-container {
+    width: 100%;
+  }
+  
+  .role-select {
+    width: 100%;
+  }
+  
+  .permission-footer {
+    flex-direction: column;
+    gap: 20px;
+    text-align: center;
+  }
+  
+  .footer-actions {
+    width: 100%;
+    justify-content: stretch;
+  }
+  
+  .btn-cancel, .btn-save {
+    flex: 1;
+  }
+}

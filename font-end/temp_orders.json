@@ -1,0 +1,40 @@
+[
+  {
+    "createdAt": "2026-04-12T15:10:51.842974",
+    "deleted": false,
+    "discountAmount": 10000,
+    "id": "e9fb48eb-7003-4f4f-9cf2-c95b43ffe37a",
+    "items": [],
+    "note": null,
+    "paymentMethod": "COD",
+    "paymentStatus": null,
+    "receiverEmail": null,
+    "receiverName": "Nguyen Van A",
+    "receiverPhone": "0901234567",
+    "shippingAddress": "HCM",
+    "shippingFee": 20000,
+    "status": "CANCELLED",
+    "subtotal": null,
+    "totalAmount": null,
+    "updatedAt": "2026-04-12T15:12:22.275032"
+  },
+  {
+    "createdAt": "2026-04-12T15:15:05.675017",
+    "deleted": false,
+    "discountAmount": 0,
+    "id": "26dc1045-2759-44e6-9a11-c3e44f45feeb",
+    "items": [],
+    "note": "",
+    "paymentMethod": "COD",
+    "paymentStatus": null,
+    "receiverEmail": "tung@gmail.com",
+    "receiverName": "Trần Văn Tùng",
+    "receiverPhone": "0766745569",
+    "shippingAddress": "Cát Tường",
+    "shippingFee": 0,
+    "status": null,
+    "subtotal": 56575,
+    "totalAmount": 56575,
+    "updatedAt": "2026-04-12T15:15:05.675063"
+  }
+]

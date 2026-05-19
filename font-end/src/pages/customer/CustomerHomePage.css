@@ -1,0 +1,221 @@
+.home-container {
+  padding: 40px 60px;
+  max-width: 1400px;
+  margin: 0 auto;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* HERO SECTION */
+.hero-section {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 60px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+}
+
+.hero-bg {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?auto=compress&cs=tinysrgb&w=1600'); 
+  /* Fallback dark elegant meat/steak background */
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(17, 24, 39, 0.7) 0%, rgba(17, 24, 39, 0.9) 100%);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  text-align: center;
+  color: white;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.hero-pill {
+  display: inline-block;
+  background-color: #f59e0b;
+  color: white;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 24px;
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+}
+
+.hero-title {
+  font-size: 56px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 24px;
+  letter-spacing: -1px;
+}
+
+.text-orange-glow {
+  color: #f59e0b;
+  text-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+}
+
+.hero-desc {
+  font-size: 18px;
+  color: #d1d5db;
+  line-height: 1.6;
+  margin-bottom: 36px;
+  max-width: 600px;
+  margin-inline: auto;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+}
+
+.btn-header-primary {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 0 32px;
+  height: 52px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.btn-header-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+}
+
+.btn-header-outline {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  color: white;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 0 32px;
+  height: 52px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-header-outline:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* FEATURED SECTION */
+.featured-section {
+  padding: 20px 0;
+  position: relative;
+}
+
+.featured-header {
+  margin-bottom: 40px;
+}
+
+.featured-header h2 {
+  font-size: 32px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.featured-header p {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.carousel-container {
+  position: relative;
+}
+
+.featured-grid {
+  display: flex;
+  gap: 30px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0 30px;
+  /* Hide scrollbar */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.featured-grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+.slider-item {
+  flex: 0 0 calc(25% - 22.5px); /* 4 items with 30px gap */
+  min-width: 280px;
+}
+
+.loading-home {
+  text-align: center;
+  padding: 100px;
+  color: #6b7280;
+  font-size: 18px;
+}
+
+.empty-home {
+  text-align: center;
+  padding: 80px;
+  background: #f9fafb;
+  border-radius: 20px;
+  color: #6b7280;
+}
+
+/* CAROUSEL ARROW */
+.carousel-btn {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  background: #f59e0b;
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+  z-index: 10;
+  transition: all 0.2s;
+}
+
+.carousel-btn:hover {
+  transform: translateY(-50%) scale(1.1);
+  background: #ea580c;
+}
+
+.btn-left {
+  left: -60px;
+}
+
+.btn-right {
+  right: -60px;
+}

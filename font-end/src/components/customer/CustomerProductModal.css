@@ -1,0 +1,322 @@
+.product-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 20px;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.product-modal-content {
+  background: white;
+  width: 100%;
+  max-width: 1100px;
+  border-radius: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+  animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(40px) scale(0.95);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  color: #1f2937;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.modal-close-btn:hover {
+  background: #ef4444;
+  color: white;
+  transform: rotate(90deg) scale(1.1);
+  border-color: #ef4444;
+  box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4);
+}
+
+.product-modal-content .modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .product-modal-content .modal-body {
+    flex-direction: row;
+  }
+}
+
+.modal-image-section {
+  flex: 1;
+  background: #f3f4f6;
+  min-height: 300px;
+  max-height: 400px;
+}
+
+@media (min-width: 768px) {
+  .modal-image-section {
+    max-height: 500px;
+  }
+}
+
+.modal-image-section img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-modal-content:hover .modal-image-section img {
+  transform: scale(1.03);
+}
+
+.modal-info-section {
+  flex: 1.4;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Đẩy nội dung ra xa nhau */
+}
+
+.prd-modal-header {
+  margin-bottom: 24px;
+}
+
+.info-row {
+  display: flex;
+  align-items: center;
+  /* Căn giữa dọc */
+  margin-bottom: 8px;
+}
+
+.info-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  width: 90px;
+  flex-shrink: 0;
+  text-transform: capitalize;
+}
+
+.info-value {
+  flex: 1;
+}
+
+.category-tag {
+  color: #374151;
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 0;
+  line-height: 1.25;
+  letter-spacing: -0.5px;
+}
+
+.modal-price {
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0;
+}
+
+.modal-description {
+  margin-bottom: 32px;
+  background: #f9fafb;
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid #f3f4f6;
+  flex-grow: 1;
+  /* Cho phép giãn ra để lấp đầy không gian */
+  min-height: 220px;
+  max-height: 480px;
+  overflow-y: auto;
+}
+
+.modal-description::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-description::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
+  margin: 10px 0;
+}
+
+.modal-description::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 10px;
+}
+
+.modal-description::-webkit-scrollbar-thumb:hover {
+  background: #9ca3af;
+}
+
+.modal-description h3 {
+  font-size: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #9ca3af;
+  margin-bottom: 12px;
+  letter-spacing: 1px;
+}
+
+.modal-description p {
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-end; /* Căn lề nút qua phải */
+}
+
+@media (min-width: 480px) {
+  .modal-actions {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+}
+
+.quantity-selector {
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 2px solid #f3f4f6;
+  border-radius: 999px;
+  padding: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.qty-btn {
+  background: #f9fafb;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #4b5563;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.qty-btn:hover:not(:disabled) {
+  background: #fef3c7;
+  color: #d97706;
+  transform: scale(1.1);
+}
+
+.qty-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  background: transparent;
+}
+
+.qty-value {
+  padding: 0 20px;
+  font-weight: 700;
+  font-size: 18px;
+  color: #111827;
+  min-width: 50px;
+  text-align: center;
+}
+
+.modal-add-btn {
+  background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%);
+  color: white;
+  border: none;
+  border-radius: 99px;
+  padding: 0 24px;
+  height: 48px;
+  font-weight: 700;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.modal-add-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(white, rgba(255, 255, 255, 0));
+  opacity: 0.1;
+  border-radius: 999px;
+}
+
+.modal-add-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+}
+
+.modal-add-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.4);
+}

@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres_db
+    environment:
+      POSTGRES_DB: doantotnghiep
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: VanTung2211@
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./DoantotnghiepIJ/DoantotnghiepIJ
+    container_name: springboot_app
+    depends_on:
+      - postgres
+    environment:
+      PGHOST: postgres
+      PGPORT: 5432
+      PGDATABASE: doantotnghiep
+      PGUSER: postgres
+      PGPASSWORD: VanTung2211@
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./font-end
+    container_name: react_nginx
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres_data:

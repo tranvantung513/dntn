@@ -1,0 +1,7 @@
+Payload: ["email"] -> Status: 400 Response: {"message":"Password is required","timestamp":"2026-04-05T22:00:49.671253443"}
+Payload: ["email","password"] -> Status: 400 Response: {"message":"Password is required","timestamp":"2026-04-05T22:00:49.756396498"}
+Payload: ["email","newPassword"] -> Status: 400 Response: {"message":"Password is required","timestamp":"2026-04-05T22:00:49.836159755"}
+Payload: ["email","password","confirmPassword"] -> Status: 400 Response: {"message":"Password is required","timestamp":"2026-04-05T22:00:49.917225263"}
+Payload: ["email","newPassword","confirmPassword"] -> Status: 200 Response: Password reset successful
+Payload: ["email","password","newPassword"] -> Status: 400 Response: {"message":"Password is required","timestamp":"2026-04-05T22:00:50.168767088"}
+Payload: ["email","password","newPassword","confirmPassword"] -> Status: 200 Response: Password reset successful

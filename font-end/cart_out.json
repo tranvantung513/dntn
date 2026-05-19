@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "name": "món chua",
+      "price": 5363534,
+      "productId": "147b019f-b952-40c3-a88e-c51c9e55b785",
+      "quantity": 1,
+      "thumbnail": "https://res.cloudinary.com/dhglh01cv/image/upload/v1774754981/qzvxohttbz6tnlfnrkcs.jpg",
+      "total": 5363534
+    },
+    {
+      "name": "món chua",
+      "price": 435000,
+      "productId": "b407413f-90d9-4d73-9b98-a6c2a302b080",
+      "quantity": 1,
+      "thumbnail": "https://res.cloudinary.com/dhglh01cv/image/upload/v1774752668/qf1owden8bcxij1qcrno.jpg",
+      "total": 435000
+    }
+  ],
+  "subtotal": 5798534,
+  "total": 5798534
+}

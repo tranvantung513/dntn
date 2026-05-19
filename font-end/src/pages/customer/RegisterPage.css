@@ -1,0 +1,363 @@
+.register-container {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f8f4; /* Nền mờ off-white */
+  padding: 40px 20px;
+  font-family: 'Inter', sans-serif;
+  color: #1f2937;
+}
+
+.register-card {
+  display: flex;
+  width: 100%;
+  max-width: 1000px;
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); /* Đổ bóng khổng lồ */
+}
+
+/* LEFT SIDE - IMAGE */
+.register-left {
+  flex: 1;
+  background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.2)), 
+              url('../../assets/register-banner.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  color: #ffffff;
+}
+
+.register-left-content {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transform: translateY(-20px);
+  animation: floatUp 0.8s ease-out forwards;
+}
+
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.register-left-content h1 {
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 20px;
+  color: #ffffff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  font-family: 'Outfit', 'Inter', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.register-left-content p {
+  font-size: 16px;
+  line-height: 1.7;
+  color: #f3f4f6;
+  opacity: 0.95;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.6);
+  max-width: 95%;
+}
+
+/* RIGHT SIDE - FORM */
+.register-right {
+  flex: 1;
+  padding: 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.register-form-wrapper {
+  max-width: 420px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.register-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.register-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 32px;
+  line-height: 1.5;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.input-row {
+  display: flex;
+  gap: 16px;
+}
+
+.input-row .input-group {
+  flex: 1;
+}
+
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4b5563;
+  margin-bottom: 8px;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #f3f4f6;
+  border-radius: 99px; /* Rounded pill style from image */
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.input-wrapper:focus-within {
+  background: #fff;
+  box-shadow: 0 0 0 2px #f59e0b; /* Viền cam khi nhấp vào */
+}
+
+.input-icon {
+  position: absolute;
+  left: 16px;
+  color: #9ca3af;
+}
+
+.input-wrapper input {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 12px 16px 12px 44px;
+  font-size: 14px;
+  color: #111827;
+  outline: none;
+}
+
+.input-wrapper input::placeholder {
+  color: #9ca3af;
+}
+
+/* Checkbox Điều khoản */
+.terms-group {
+  margin-top: 4px;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: 13px;
+  color: #6b7280;
+  position: relative;
+  user-select: none;
+  gap: 12px;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  height: 18px;
+  width: 18px;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #e5e7eb;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #f59e0b;
+  border-color: #f59e0b;
+}
+
+.checkmark:after {
+  content: "";
+  display: none;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  margin-top: -2px;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.terms-text a {
+  color: #f59e0b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.terms-text a:hover {
+  text-decoration: underline;
+}
+
+/* Submit Button */
+.btn-register {
+  background: #f59e0b; /* Màu cam đặc trưng */
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 24px;
+  border: none;
+  border-radius: 99px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.3s ease;
+  margin-top: 8px;
+}
+
+.btn-register:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(245, 158, 11, 0.4);
+}
+
+.btn-register:disabled {
+  background: #fcd34d;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.login-prompt {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 8px;
+}
+
+.login-prompt a {
+  color: #f59e0b;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-prompt a:hover {
+  text-decoration: underline;
+}
+
+/* Footer Outside Card */
+.register-footer {
+  margin-top: 32px;
+  font-size: 13px;
+  color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .register-card {
+    flex-direction: column;
+    max-width: 500px;
+  }
+  
+  .register-left {
+    min-height: 250px;
+    padding: 32px;
+  }
+  
+  .register-right {
+    padding: 32px 24px;
+  }
+  
+  .input-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* OTP Step Styles */
+.otp-verification-step {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.otp-icon-wrapper {
+  width: 80px;
+  height: 80px;
+  background: #fef3c7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px auto;
+}
+
+.btn-back-step {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  margin-bottom: 16px;
+  font-size: 14px;
+}
+
+.btn-back-step:hover {
+  color: #111827;
+}
+
+.otp-input-wrapper {
+  margin-bottom: 24px;
+}
+
+.btn-resend-otp {
+  background: transparent;
+  border: none;
+  color: #f59e0b;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-resend-otp:hover {
+  text-decoration: underline;
+}
+
+.text-orange {
+  color: #f59e0b;
+}

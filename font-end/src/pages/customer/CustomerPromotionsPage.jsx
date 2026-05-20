@@ -7,6 +7,7 @@ import './CustomerPromotionsPage.css';
 const CustomerPromotionsPage = () => {
   const [promotions, setPromotions] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPromo, setSelectedPromo] = useState(null);
   const toast = useToast();
 
   useEffect(() => {
@@ -44,10 +45,15 @@ const CustomerPromotionsPage = () => {
   };
 
   const formatCurrency = (val) => {
-    if (val >= 1000) {
-      return (val / 1000) + 'K';
-    }
-    return val + 'đ';
+    return new Intl.NumberFormat('vi-VN').format(val || 0) + 'đ';
+  };
+
+  const openPromoDetails = (promo) => {
+    setSelectedPromo(promo);
+  };
+
+  const closePromoDetails = () => {
+    setSelectedPromo(null);
   };
 
   const formatVietnameseDate = (dateStr) => {
@@ -126,6 +132,12 @@ const CustomerPromotionsPage = () => {
                       <div className="promo-card-footer">
                         <Calendar size={14} className="calendar-icon" />
                         <span>Hết hạn: {formatVietnameseDate(promo.endDate)}</span>
+                        <button 
+                          className="btn-view-promo-details"
+                          onClick={() => openPromoDetails(promo)}
+                        >
+                          Điều kiện
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -135,6 +147,40 @@ const CustomerPromotionsPage = () => {
           )}
         </div>
       </section>
+
+      {/* Promotion Detail Modal */}
+      {selectedPromo && (
+        <div className="promo-modal-overlay" onClick={closePromoDetails}>
+          <div className="promo-modal-content" onClick={(e) => e.stopPropagation()}>
+            <div className="promo-modal-header">
+              <h2>Chi Tiết Khuyến Mãi</h2>
+              <button className="promo-modal-close" onClick={closePromoDetails}>×</button>
+            </div>
+            <div className="promo-modal-body">
+              <div className="promo-modal-info">
+                <h3>{selectedPromo.name}</h3>
+                <p><strong>Mã:</strong> <span className="highlight-code">{selectedPromo.code}</span></p>
+                <p><strong>Loại giảm:</strong> {selectedPromo.discountType === 0 ? 'Giảm theo phần trăm' : 'Giảm số tiền cố định'}</p>
+                <p>
+                  <strong>Mức giảm:</strong> {selectedPromo.discountType === 0 
+                    ? `${selectedPromo.discountValue}%` 
+                    : formatCurrency(selectedPromo.discountValue)}
+                </p>
+                <p><strong>Đơn tối thiểu:</strong> {formatCurrency(selectedPromo.minOrderValue)}</p>
+                {selectedPromo.discountType === 0 && selectedPromo.maxDiscountAmount > 0 && (
+                  <p><strong>Giảm tối đa:</strong> {formatCurrency(selectedPromo.maxDiscountAmount)}</p>
+                )}
+                <p><strong>Ngày bắt đầu:</strong> {formatVietnameseDate(selectedPromo.startDate)}</p>
+                <p><strong>Ngày kết thúc:</strong> {formatVietnameseDate(selectedPromo.endDate)}</p>
+                <p><strong>Số lượng còn:</strong> {selectedPromo.usageLimit > 0 ? selectedPromo.usageLimit - (selectedPromo.usedCount || 0) : 'Không giới hạn'}</p>
+              </div>
+              <button className="btn-copy-large" onClick={() => { handleCopyCode(selectedPromo.code); closePromoDetails(); }}>
+                Sao Chép Mã
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

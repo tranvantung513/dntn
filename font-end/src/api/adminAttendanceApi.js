@@ -6,10 +6,9 @@ export const adminAttendanceApi = {
   create: async (data) => {
     return await axios.post('/api/attendances/admin', data);
   },
-  // Thực tế: Lấy tất cả lịch sử chấm công
+  // Lấy tất cả lịch sử chấm công theo ngày
   getAll: async (params = {}) => {
     const response = await axios.get(API_BASE, { params });
-    // Hỗ trợ cả 3 định dạng trả về phổ biến: Array trực tiếp, Object bọc .data, Object bọc .content (Page)
     let records = [];
     if (Array.isArray(response.data)) {
         records = response.data;
@@ -19,6 +18,20 @@ export const adminAttendanceApi = {
         records = response.data.content;
     }
     return records;
+  },
+
+  // Lấy toàn bộ bản ghi trong tháng/năm
+  getByMonth: async (month, year) => {
+    const response = await axios.get('/api/attendances/admin/monthly', { params: { month, year } });
+    const data = response.data?.data || response.data || [];
+    return Array.isArray(data) ? data : [];
+  },
+
+  // Lấy bản ghi của 1 nhân viên trong tháng/năm
+  getByUserAndMonth: async (userId, month, year) => {
+    const response = await axios.get('/api/attendances/admin/user-monthly', { params: { userId, month, year } });
+    const data = response.data?.data || response.data || [];
+    return Array.isArray(data) ? data : [];
   },
 
   updateStatus: async (id, status) => {

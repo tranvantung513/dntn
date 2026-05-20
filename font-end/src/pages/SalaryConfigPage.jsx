@@ -10,8 +10,8 @@ const SalaryConfigPage = () => {
   const [users, setUsers] = useState([]);
   const [salaryConfigs, setSalaryConfigs] = useState([]);
   const [payrollList, setPayrollList] = useState([]);
-  const [selectedMonth, setSelectedMonth] = useState(4);
-  const [selectedYear, setSelectedYear] = useState(2026);
+  const [selectedMonth, setSelectedMonth] = useState(new Date().getMonth() + 1);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
   const [isPayrollLoading, setIsPayrollLoading] = useState(false);
   const [isPayrollEditModalOpen, setIsPayrollEditModalOpen] = useState(false);
   const [editingPayroll, setEditingPayroll] = useState({ userId: null, allowance: 0, deduction: 0, name: '' });

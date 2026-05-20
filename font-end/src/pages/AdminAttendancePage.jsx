@@ -18,6 +18,15 @@ const AdminAttendancePage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 5;
   const toast = useToast();
+
+
+  const [viewMode, setViewMode] = useState('daily');
+  const [selectedMonth, setSelectedMonth] = useState(`${new Date().getFullYear()}-${String(new Date().getMonth() + 1).padStart(2, '0')}`);
+  const [monthlyData, setMonthlyData] = useState([]);
+  const [monthlyLoading, setMonthlyLoading] = useState(false);
+  const [selectedUserDetail, setSelectedUserDetail] = useState(null);
+  const [userDetailRecords, setUserDetailRecords] = useState([]);
+  const [detailLoading, setDetailLoading] = useState(false);
   
   // Modal Edit states
   const [showEditModal, setShowEditModal] = useState(false);
@@ -44,8 +53,10 @@ const AdminAttendancePage = () => {
         const usersRes = await userApi.getAll();
         const usersData = Array.isArray(usersRes.data) ? usersRes.data : (usersRes.data?.content || []);
         usersMap = (Array.isArray(usersData) ? usersData : []).reduce((acc, user) => {
-          const parts = (user.fullName || 'Khách').split(' ');
+          const parts = (user.fullName || 'Khach').split(' ');
           const avatar = parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : parts[0][0].toUpperCase();
+          // Store with both string and number key for safe lookup
+          acc[String(user.id)] = { ...user, avatar };
           acc[user.id] = { ...user, avatar };
           return acc;
         }, {});
@@ -73,6 +84,64 @@ const AdminAttendancePage = () => {
     loadData();
     setCurrentPage(1);
   }, [activeTab, selectedDate]);
+
+  const loadMonthlyData = async () => {
+    setMonthlyLoading(true);
+    try {
+      // Load users if not yet loaded
+      if (Object.keys(usersInfo).length === 0) {
+        try {
+          const usersRes = await userApi.getAll();
+          const usersData = Array.isArray(usersRes.data) ? usersRes.data : (usersRes.data?.content || []);
+          const usersMap = (Array.isArray(usersData) ? usersData : []).reduce((acc, user) => {
+            const parts = (user.fullName || 'NV').split(' ');
+            const avatar = parts.length > 1 ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase() : (parts[0][0] || 'N').toUpperCase();
+            acc[String(user.id)] = { ...user, avatar };
+            acc[user.id] = { ...user, avatar };
+            return acc;
+          }, {});
+          setUsersInfo(usersMap);
+        } catch (e) {
+          console.warn('Could not load users for monthly view', e);
+        }
+      }
+
+      const [year, month] = selectedMonth.split('-');
+      const records = await adminAttendanceApi.getByMonth(parseInt(month), parseInt(year));
+      const grouped = {};
+      records.forEach(r => {
+        const uid = String(r.userId);
+        if (!grouped[uid]) grouped[uid] = { userId: r.userId, totalHours: 0, approvedHours: 0, totalShifts: 0, pendingShifts: 0 };
+        grouped[uid].totalShifts++;
+        grouped[uid].totalHours += r.workingHours || 0;
+        if (r.status === 'APPROVED') grouped[uid].approvedHours += r.workingHours || 0;
+        if (r.status === 'PENDING') grouped[uid].pendingShifts++;
+      });
+      setMonthlyData(Object.values(grouped));
+    } catch (err) {
+      toast.error('Khong the tai du lieu thang: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setMonthlyLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (viewMode === 'monthly') loadMonthlyData();
+  }, [viewMode, selectedMonth]);
+
+  const handleViewUserDetail = async (userId) => {
+    setSelectedUserDetail(userId);
+    setDetailLoading(true);
+    try {
+      const [year, month] = selectedMonth.split('-');
+      const records = await adminAttendanceApi.getByUserAndMonth(userId, parseInt(month), parseInt(year));
+      setUserDetailRecords(records);
+    } catch (err) {
+      toast.error('L\u1ed7i t\u1ea3i chi ti\u1ebft nh\u00e2n vi\u00ean');
+    } finally {
+      setDetailLoading(false);
+    }
+  };
 
   const filteredData = (Array.isArray(data) ? data : []).filter(d => {
     if (activeTab !== 'ALL' && d.status?.toUpperCase() !== activeTab) return false;
@@ -180,7 +249,7 @@ const AdminAttendancePage = () => {
 
   return (
     <>
-      {/* HEADER TOP (Pattern lấy từ ReservationPage) */}
+      {/* HEADER TOP */}
       <div className="header-top">
         <div className="page-title-area">
           <h1>Quản lý Chấm công</h1>
@@ -203,7 +272,116 @@ const AdminAttendancePage = () => {
 
       <div className="attendance-page" style={{ marginTop: '32px' }}>
 
-        {/* TABLE SECTION */}
+        {/* MONTHLY SUMMARY VIEW */}
+        {viewMode === 'monthly' && (
+          <div className="table-section">
+            <div className="table-tabs-header" style={{ justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                {selectedUserDetail && (
+                  <button onClick={() => setSelectedUserDetail(null)}
+                    style={{ background: 'none', border: '1px solid #cbd5e1', borderRadius: '6px', padding: '6px 12px', cursor: 'pointer', fontWeight: 600, fontSize: '13px', color: '#475569' }}>
+                    &larr; Quay lai
+                  </button>
+                )}
+                <h3 style={{ margin: 0, fontSize: '16px', fontWeight: 700, color: '#1e293b' }}>
+                  {selectedUserDetail
+                    ? 'Chi tiet: ' + (usersInfo[selectedUserDetail]?.fullName || 'NV#' + selectedUserDetail)
+                    : 'Tong gio lam theo nhan vien'}
+                </h3>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'white', padding: '8px 16px', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+                <Calendar size={18} color="#94a3b8" />
+                <input type="month" value={selectedMonth} onChange={e => { setSelectedMonth(e.target.value); setSelectedUserDetail(null); }}
+                  style={{ border: 'none', outline: 'none', color: '#374151', fontWeight: 600, fontSize: '14px', background: 'transparent', cursor: 'pointer' }} />
+              </div>
+            </div>
+            {!selectedUserDetail ? (
+              <table className="attendance-table">
+                <thead><tr>
+                  <th>Nhan vien</th>
+                  <th style={{ textAlign: 'center' }}>Tong ca</th>
+                  <th style={{ textAlign: 'center' }}>Tong gio</th>
+                  <th style={{ textAlign: 'center' }}>Gio da duyet (tinh luong)</th>
+                  <th style={{ textAlign: 'center' }}>Cho duyet</th>
+                  <th style={{ textAlign: 'center' }}>Chi tiet</th>
+                </tr></thead>
+                <tbody>
+                  {monthlyLoading ? (
+                    <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px' }}>Dang tai...</td></tr>
+                  ) : monthlyData.length === 0 ? (
+                    <tr><td colSpan="6" style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>Khong co du lieu chấm cong trong thang nay.</td></tr>
+                  ) : monthlyData.map(row => {
+                    const emp = usersInfo[row.userId] || { fullName: 'NV #' + row.userId };
+                    return (
+                      <tr key={row.userId}>
+                        <td>
+                          <div className="employee-cell">
+                            <div className="employee-info-detail" style={{ marginLeft: 0 }}>
+                              <span className="employee-name">{emp.fullName}</span>
+                              <span className="employee-role">{emp.roles?.[0]?.name || 'Nhan vien'}</span>
+                            </div>
+                          </div>
+                        </td>
+                        <td style={{ textAlign: 'center' }}><span className="cell-total-hours">{row.totalShifts} ca</span></td>
+                        <td style={{ textAlign: 'center' }}><span className="cell-total-hours">{row.totalHours.toFixed(1)}h</span></td>
+                        <td style={{ textAlign: 'center' }}><span style={{ color: '#10b981', fontWeight: 700 }}>{row.approvedHours.toFixed(1)}h</span></td>
+                        <td style={{ textAlign: 'center' }}>
+                          {row.pendingShifts > 0
+                            ? <span style={{ background: '#fef3c7', color: '#d97706', padding: '2px 8px', borderRadius: '12px', fontSize: '12px', fontWeight: 600 }}>{row.pendingShifts} ca</span>
+                            : <span style={{ color: '#94a3b8' }}>-</span>}
+                        </td>
+                        <td style={{ textAlign: 'center' }}>
+                          <button onClick={() => handleViewUserDetail(row.userId)}
+                            style={{ background: '#eff6ff', color: '#3b82f6', border: 'none', borderRadius: '6px', padding: '6px 14px', cursor: 'pointer', fontWeight: 600, fontSize: '13px' }}>
+                            Xem chi tiet
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <table className="attendance-table">
+                <thead><tr>
+                  <th>Ngay</th><th>Gio vao</th><th>Gio ra</th>
+                  <th style={{ textAlign: 'center' }}>Tong gio</th><th>Trang thai</th>
+                </tr></thead>
+                <tbody>
+                  {detailLoading ? (
+                    <tr><td colSpan="5" style={{ textAlign: 'center', padding: '40px' }}>Dang tai...</td></tr>
+                  ) : userDetailRecords.length === 0 ? (
+                    <tr><td colSpan="5" style={{ textAlign: 'center', padding: '40px', color: '#6b7280' }}>Khong co du lieu.</td></tr>
+                  ) : userDetailRecords.map((r, i) => {
+                    const fmt = t => { if (!t) return '--:--'; if (t.includes('T')) return t.split('T')[1].substring(0, 5); return t.substring(0, 5); };
+                    const d = new Date(r.date || r.checkIn);
+                    const ds = String(d.getDate()).padStart(2,'0') + '/' + String(d.getMonth()+1).padStart(2,'0') + '/' + d.getFullYear();
+                    return (
+                      <tr key={r.id || i}>
+                        <td>{ds}</td>
+                        <td><span className="cell-time-large">{fmt(r.checkIn)}</span></td>
+                        <td><span className={r.checkOut ? 'cell-time-large' : 'cell-time-empty'}>{fmt(r.checkOut)}</span></td>
+                        <td style={{ textAlign: 'center' }}><span className="cell-total-hours">{(r.workingHours || 0).toFixed(1)}h</span></td>
+                        <td>
+                          <select className={'status-pill inline-select ' + (r.status?.toUpperCase()==='APPROVED' ? 'status-confirmed' : r.status?.toUpperCase()==='PENDING' ? 'status-pending' : 'status-cancelled')}
+                            value={r.status?.toUpperCase() || 'PENDING'}
+                            onChange={e => handleInlineStatusUpdate(r.id, e.target.value)}>
+                            <option value="PENDING">CHO XAC NHAN</option>
+                            <option value="APPROVED">DA XAC NHAN</option>
+                            <option value="REJECTED">TU CHOI</option>
+                          </select>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            )}
+          </div>
+        )}
+
+        {/* DAILY VIEW */}
+        {viewMode === 'daily' && (
         <div className="table-section">
           <div className="table-tabs-header">
             <div className="tabs-list">
@@ -246,8 +424,8 @@ const AdminAttendancePage = () => {
                 </tr>
               ) : (
                 currentData.map(item => {
-                  const emp = usersInfo[item.userId] || { fullName: `Nhân viên #${item.userId}`, role: 'Nhân viên', avatar: 'NV' };
-                  const userRole = emp.roles && emp.roles.length > 0 ? emp.roles[0].name : 'Nhân viên';
+                  const emp = usersInfo[item.userId] || usersInfo[String(item.userId)] || { fullName: `Nhan vien #${item.userId}`, role: 'Nhan vien', avatar: 'NV' };
+                  const userRole = emp.roles && emp.roles.length > 0 ? emp.roles[0].name : 'Nhan vien';
                   
                   // Format Date and Time
                   let dateStr = item.date || '';
@@ -306,11 +484,8 @@ const AdminAttendancePage = () => {
                       </td>
                       <td>
                         <div className="action-buttons">
-                          <button className="att-action-btn" title="Chỉnh sửa" onClick={() => handleEditClick(item)}>
+                          <button className="att-action-btn" title="Chinh sua" onClick={() => handleEditClick(item)}>
                             <Pencil size={16} />
-                          </button>
-                          <button className="att-action-btn" title="Xóa">
-                            <Trash2 size={16} />
                           </button>
                         </div>
                       </td>
@@ -353,6 +528,8 @@ const AdminAttendancePage = () => {
             </div>
           </div>
         </div>
+        )}
+
       </div>
 
       {showEditModal && editingItem && (

@@ -24,6 +24,7 @@ services:
       PGDATABASE: doantotnghiep
       PGUSER: postgres
       PGPASSWORD: VanTung2211@
+
     ports:
       - "8080:8080"
 

@@ -103,6 +103,16 @@ public class AttendanceService {
         return attendanceRepository.findAll(PageRequest.of(page, size));
     }
 
+    // ✅ Admin - Lấy toàn bộ bản ghi trong tháng/năm
+    public List<Attendance> getByMonth(int month, int year) {
+        return attendanceRepository.findByMonthAndYear(month, year);
+    }
+
+    // ✅ Admin - Lấy bản ghi của 1 nhân viên trong tháng/năm
+    public List<Attendance> getByUserAndMonth(Long userId, int month, int year) {
+        return attendanceRepository.findByUserIdAndMonthAndYear(userId, month, year);
+    }
+
     // =========================
     // 🔥 ADMIN DUYỆT
     // =========================

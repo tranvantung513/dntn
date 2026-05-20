@@ -85,7 +85,14 @@ const AttendancePage = () => {
 
   useEffect(() => {
     if (userId) {
+      // Reset ngay lap tuc khi doi user, tranh hien du lieu cu
+      setHistory([]);
+      setTotalHours(0);
       loadAttendanceData(selectedMonth);
+    } else {
+      // Logout: xoa sach du lieu
+      setHistory([]);
+      setTotalHours(0);
     }
   }, [userId, selectedMonth]);
 

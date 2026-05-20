@@ -57,4 +57,34 @@ public interface AttendanceRepository extends JpaRepository<Attendance, Long> {
 """)
     double sumWorkingHours(Long userId, int month, int year);
 
+    // Tính tất cả giᤁ đã có checkOut (kể cả PENDING) - dùng cho hiển thị bảng lương
+    @Query("""
+    SELECT COALESCE(SUM(a.workingHours), 0)
+    FROM Attendance a
+    WHERE a.userId = :userId
+    AND a.checkOut IS NOT NULL
+    AND MONTH(a.date) = :month
+    AND YEAR(a.date) = :year
+""")
+    double sumAllWorkingHours(Long userId, int month, int year);
+
+    // Lấy toàn bộ bản ghi theo tháng/năm (dùng cho admin xem tổng theo nhân viên)
+    @Query("""
+    SELECT a FROM Attendance a
+    WHERE MONTH(a.date) = :month
+    AND YEAR(a.date) = :year
+    ORDER BY a.date DESC
+""")
+    List<Attendance> findByMonthAndYear(int month, int year);
+
+    // Lấy theo userId + tháng/năm (admin xem chi tiết 1 nhân viên)
+    @Query("""
+    SELECT a FROM Attendance a
+    WHERE a.userId = :userId
+    AND MONTH(a.date) = :month
+    AND YEAR(a.date) = :year
+    ORDER BY a.date DESC
+""")
+    List<Attendance> findByUserIdAndMonthAndYear(Long userId, int month, int year);
+
 }

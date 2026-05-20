@@ -77,6 +77,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+
+                // 🔥 Set userId vao request attribute de controller co the dung
+                request.setAttribute("userId", userId);
             }
 
         } catch (Exception e) {

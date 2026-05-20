@@ -118,6 +118,24 @@ const MenuItemPage = () => {
     setIsModalOpen(true);
   };
 
+  const getSubcategoryIds = (targetId, nodes) => {
+    let ids = [];
+    const findNodeAndChildren = (currentNodes, found) => {
+      for (const node of currentNodes) {
+        if (found || node.id === targetId) {
+          ids.push(node.id);
+          if (node.children && node.children.length > 0) {
+            findNodeAndChildren(node.children, true);
+          }
+        } else if (node.children && node.children.length > 0) {
+          findNodeAndChildren(node.children, false);
+        }
+      }
+    };
+    findNodeAndChildren(nodes, false);
+    return ids;
+  };
+
   // Client-side filtering logic matching the requested specification
   let filteredItems = items.filter(item => {
     // 1. Search Filter
@@ -129,7 +147,10 @@ const MenuItemPage = () => {
     if (statusFilter === 'INACTIVE' && isActived) return false;
 
     // 3. Category Filter
-    if (categoryFilter !== 'ALL' && item.category?.id !== categoryFilter) return false;
+    if (categoryFilter !== 'ALL') {
+      const validIds = getSubcategoryIds(categoryFilter, categories);
+      if (!validIds.includes(item.category?.id)) return false;
+    }
 
     return true;
   });

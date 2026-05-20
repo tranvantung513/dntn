@@ -265,3 +265,121 @@
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+/* --- Promotion Modal --- */
+.btn-view-promo-details {
+  margin-left: auto;
+  background: none;
+  border: 1px solid #d97706;
+  color: #d97706;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-view-promo-details:hover {
+  background: #fffbeb;
+}
+
+.promo-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.promo-modal-content {
+  background: white;
+  width: 100%;
+  max-width: 450px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: modal-pop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.promo-modal-header {
+  background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+}
+
+.promo-modal-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.promo-modal-close {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.promo-modal-body {
+  padding: 24px;
+}
+
+.promo-modal-info h3 {
+  margin: 0 0 16px 0;
+  color: #1e293b;
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.promo-modal-info p {
+  margin: 0 0 12px 0;
+  color: #475569;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dashed #e2e8f0;
+  padding-bottom: 8px;
+}
+
+.promo-modal-info p strong {
+  color: #1e293b;
+}
+
+.highlight-code {
+  font-family: monospace;
+  background: #f1f5f9;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 700;
+  color: #d97706;
+}
+
+.btn-copy-large {
+  width: 100%;
+  margin-top: 20px;
+  padding: 14px;
+  background-color: #d97706;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-copy-large:hover {
+  background-color: #b45309;
+}
